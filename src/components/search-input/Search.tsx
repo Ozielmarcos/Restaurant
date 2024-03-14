@@ -2,13 +2,20 @@ import Icon from "../icons/Icon";
 import styles from "./search.module.css";
 import lupa from "/public/Assets/lupa.png";
 
-export default function Search() {
+interface SearchProps {
+  onChange: (text: string) => void;
+}
+
+export default function Search({ onChange }: SearchProps) {
   return (
     <div className={styles.search}>
-      <button type="submit" className={styles.button}>
-        <Icon src={lupa} />
-      </button>
-      <input type="text" name="search" className={styles.input} />
+      <Icon src={lupa} />
+      <input
+        type="text"
+        name="search"
+        className={styles.input}
+        onChange={(e) => onChange(e.currentTarget.value)}
+      />
     </div>
   );
 }

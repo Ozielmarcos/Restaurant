@@ -1,5 +1,5 @@
 .cardContainer {
-  min-width: 350px;
+  min-width: 250px;
   border: 1px solid #daa520;
   display: flex;
   flex: 1;
@@ -17,13 +17,13 @@
 
 .name {
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .category {
   font-family: "Poppins";
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #daa520;
 }
 
@@ -37,7 +37,7 @@
   font-weight: bold;
   font-size: 1rem;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .image {

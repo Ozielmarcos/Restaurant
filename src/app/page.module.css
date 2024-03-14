@@ -1,5 +1,5 @@
 .container {
-  width: 70%;
+  width: 60%;
   min-height: 100vh;
   height: 100vh;
   margin: 0 auto;
@@ -31,4 +31,22 @@
   box-sizing: border-box;
   margin-top: 20px;
   padding: 1.5rem;
+}
+
+@media (min-width: 375px) and (max-width: 765px) {
+  .container {
+    width: 100%;
+  }
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .subtitulo {
+    font-size: 1.5rem;
+  }
+
+  .main {
+    width: 100%;
+  }
 }
