@@ -14,7 +14,7 @@ import Search from "@/components/search-input/Search";
 import { produtos } from "../data";
 import Card from "@/components/card/Card";
 import { useState } from "react";
-import { StaticImageData } from "next/image";
+import { IProduct } from "./props";
 
 const navButton = [
   { name: "Entradas", image: entrada, active: false },
@@ -25,18 +25,9 @@ const navButton = [
   { name: "Sobremesas", image: sobremesas, active: false },
 ];
 
-interface IProduct {
-  id: number;
-  nome: string;
-  categoria: string;
-  preco: number;
-  descricao: string;
-  imagem: StaticImageData;
-}
-
 export default function Home() {
   const defaultValues = produtos.filter(
-    (produto) => produto.categoria === "Entradas"
+    (produto) => produto.categoria.toLowerCase() === "entradas"
   );
   const [data, setData] = useState<IProduct[]>(defaultValues);
 
@@ -45,16 +36,25 @@ export default function Home() {
   };
 
   const handleSearch = (text: string) => {
-    text.length > 2
-      ? setData(
-          produtos.filter(
-            (produto) =>
-              produto.nome.toLowerCase().includes(text.toLowerCase()) ||
-              produto.categoria.toLowerCase().includes(text.toLowerCase()) ||
-              produto.descricao.toLowerCase().includes(text.toLowerCase())
-          )
-        )
-      : setData(defaultValues);
+    if (text.length > 2) {
+      const removeAccent = (str: string) => {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      };
+
+      setData(
+        produtos.filter((produto) => {
+          const nome = removeAccent(produto.nome.toLowerCase());
+          const categoria = removeAccent(produto.categoria.toLowerCase());
+          const descricao = removeAccent(produto.descricao.toLowerCase());
+
+          return (
+            nome.includes(text) ||
+            categoria.includes(text) ||
+            descricao.includes(text)
+          );
+        })
+      );
+    }
   };
 
   return (
@@ -74,7 +74,10 @@ export default function Home() {
       </div>
 
       <div className={styles.searchInput}>
-        <Search onChange={(text) => handleSearch(text)} />
+        <Search
+          placeholder="Pesquise aqui um dos produtos de nosso cardápio"
+          onChange={(text) => handleSearch(text)}
+        />
       </div>
 
       <h2 className={styles.subtitulo}>Cardápio</h2>

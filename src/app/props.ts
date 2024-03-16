@@ -5,3 +5,12 @@ export interface IButton {
   image: StaticImageData;
   active: boolean;
 }
+
+export interface IProduct {
+  id: number;
+  nome: string;
+  categoria: string;
+  preco: number;
+  descricao: string;
+  imagem: StaticImageData;
+}

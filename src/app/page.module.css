@@ -36,11 +36,15 @@
 @media (min-width: 375px) and (max-width: 765px) {
   .container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
   .nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding: 0 1.3rem;
   }
   .subtitulo {
     font-size: 1.5rem;
@@ -48,5 +52,23 @@
 
   .main {
     width: 100%;
+    padding: 1.3rem;
+  }
+}
+
+@media (min-width: 766px) and (max-width: 1023px) {
+  .container {
+    width: 100%;
+  }
+  .nav,
+  .searchInput,
+  .main {
+    padding: 0 1rem;
+  }
+  .nav {
+    flex-wrap: wrap;
+  }
+  .main {
+    padding-bottom: 50px;
   }
 }

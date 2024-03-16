@@ -5,7 +5,7 @@ import styles from "./banner.module.css";
 export default function Banner() {
   return (
     <div className={styles.banner}>
-      <Image className="image" alt="Imagem de banner" src={banner} />
+      <Image className={styles.image} alt="Imagem de banner" src={banner} />
       <div className={styles.text}>
         <h1>RESTAURANTE</h1>
         <p>

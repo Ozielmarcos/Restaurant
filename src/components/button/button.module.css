@@ -31,3 +31,19 @@
   font-weight: bold;
   cursor: pointer;
 }
+
+@media (min-width: 375px) and (max-width: 765px) {
+  .default,
+  .active {
+    width: 100px;
+    height: 30px;
+    font-size: 0.6rem;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 1023px) {
+  .default,
+  .active {
+    font-size: 0.9rem;
+  }
+}
