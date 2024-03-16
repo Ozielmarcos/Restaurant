@@ -15,6 +15,7 @@ import { produtos } from "../data";
 import Card from "@/components/card/Card";
 import { useState } from "react";
 import { IProduct } from "./props";
+import { text } from "stream/consumers";
 
 const navButton = [
   { name: "Entradas", image: entrada, active: false },
@@ -27,16 +28,20 @@ const navButton = [
 
 export default function Home() {
   const defaultValues = produtos.filter(
-    (produto) => produto.categoria.toLowerCase() === "entradas"
+    (produto) => produto.categoria === "Entradas"
   );
   const [data, setData] = useState<IProduct[]>(defaultValues);
+  const [buttonActive, setButtonActive] = useState("Entradas");
+  const [text, setText] = useState("");
 
   const handleButton = (name: string) => {
     setData(produtos.filter((produto) => produto.categoria === name));
+    setButtonActive(name);
   };
 
-  const handleSearch = (text: string) => {
-    if (text.length > 2) {
+  const handleSearch = (value: string) => {
+    setText(value);
+    if (value.length > 2) {
       const removeAccent = (str: string) => {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
       };
@@ -44,13 +49,10 @@ export default function Home() {
       setData(
         produtos.filter((produto) => {
           const nome = removeAccent(produto.nome.toLowerCase());
-          const categoria = removeAccent(produto.categoria.toLowerCase());
           const descricao = removeAccent(produto.descricao.toLowerCase());
 
           return (
-            nome.includes(text) ||
-            categoria.includes(text) ||
-            descricao.includes(text)
+            (nome.includes(value) || descricao.includes(value)) ?? defaultValues
           );
         })
       );
@@ -64,7 +66,7 @@ export default function Home() {
         {navButton.map((nav, index) => (
           <Button
             key={index}
-            active={nav.name === data[0].categoria ? true : false}
+            active={buttonActive === nav.name ? true : false}
             onClick={() => handleButton(nav.name)}
           >
             <Icon src={nav.image} />
@@ -76,23 +78,28 @@ export default function Home() {
       <div className={styles.searchInput}>
         <Search
           placeholder="Pesquise aqui um dos produtos de nosso cardápio"
-          onChange={(text) => handleSearch(text)}
+          value={text}
+          onChange={(e) => handleSearch(e)}
         />
       </div>
 
       <h2 className={styles.subtitulo}>Cardápio</h2>
 
       <div className={styles.main}>
-        {data.map((produto, index) => (
-          <Card
-            key={index}
-            image={produto.imagem}
-            name={produto.nome}
-            category={produto.categoria}
-            description={produto.descricao}
-            price={produto.preco}
-          />
-        ))}
+        {data.length ? (
+          data.map((produto, index) => (
+            <Card
+              key={index}
+              image={produto.imagem}
+              name={produto.nome}
+              category={produto.categoria}
+              description={produto.descricao}
+              price={produto.preco}
+            />
+          ))
+        ) : (
+          <p className={styles.message}>Nenhum cardápio encontrado!</p>
+        )}
       </div>
     </div>
   );

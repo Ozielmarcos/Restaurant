@@ -47,3 +47,10 @@
     font-size: 0.9rem;
   }
 }
+
+@media (min-width: 1024px) and (max-width: 1444px) {
+  .default,
+  .active {
+    font-size: 0.9rem;
+  }
+}
